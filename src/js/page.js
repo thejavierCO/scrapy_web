@@ -9,7 +9,10 @@ class Page {
     const N = await this.Navegator
     const page = await N.newPage()
     await page.goto(this.url)
-    return [page, N]
+    return page
+  }
+  async Exit() {
+    return await (await this.Navegator).close()
   }
 }
 

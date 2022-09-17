@@ -10,6 +10,7 @@ async function Main() {
   await page.type('form > input[name=email].form-control', process.env.EMAIL)
   await page.type('form > input[name=password].form-control', process.env.PASS)
   await page.click('form > input[type=button]')
+
   await page.waitForSelector('table#tabla_servicios1')
   const data = await page.evaluate(() =>
     Array.from(
