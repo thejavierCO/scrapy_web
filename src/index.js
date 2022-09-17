@@ -1,14 +1,17 @@
 require('dotenv').config()
 const puppeteer = require('puppeteer')
-async function run() {
+
+async function Main() {
   const browser = await puppeteer.launch()
   const page = await browser.newPage()
+
   await page.goto('https://ayd.sadm.gob.mx/eAyd/Login.jsp')
+
   await page.type('form > input[name=email].form-control', process.env.EMAIL)
   await page.type('form > input[name=password].form-control', process.env.PASS)
   await page.click('form > input[type=button]')
   await page.waitForSelector('table#tabla_servicios1')
-  let data = await page.evaluate(() =>
+  const data = await page.evaluate(() =>
     Array.from(
       document.querySelector('table#tabla_servicios1').querySelectorAll('tr'),
     )
@@ -38,6 +41,7 @@ async function run() {
       }),
   )
   await browser.close()
-  console.log(data)
+  return data
 }
-run()
+
+Main()
