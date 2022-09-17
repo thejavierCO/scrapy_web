@@ -5,15 +5,14 @@ class SADM extends Page {
     super('https://ayd.sadm.gob.mx/eAyd/Login.jsp', view)
   }
   async login(user, password) {
-    const webpage = await this.start()
-    await webpage.type('form > input[name=email].form-control', user)
-    await webpage.type('form > input[name=password].form-control', password)
-    await webpage.click('form > input[type=button]')
-    await webpage.waitForSelector('table#tabla_servicios1')
-    return webpage
+    await this.start()
+    await this.page.type('form > input[name=email].form-control', user)
+    await this.page.type('form > input[name=password].form-control', password)
+    await this.page.click('form > input[type=button]')
+    await this.page.waitForSelector('table#tabla_servicios1')
   }
-  async getTableService(webpage = this.login) {
-    return await webpage.evaluate(() =>
+  async getTableService() {
+    return await this.page.evaluate(() =>
       Array.from(
         document.querySelector('table#tabla_servicios1').querySelectorAll('tr'),
       )
