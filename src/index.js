@@ -1,13 +1,11 @@
 require('dotenv').config()
-
-const CFE = require('./page/cfe')
+const SADM = require('./page/sadm')
 
 async function Main() {
-  let test = new CFE(true)
-  await test.login(process.env.CFE_EMAIL, process.env.CFE_PASS)
+  let test = new SADM()
+  await test.login(process.env.SADM_EMAIL, process.env.SADM_PASS)
   let data = await test.getTableService()
+  test.Exit()
   console.log(data)
-  // test.Exit()
 }
-
 Main()
