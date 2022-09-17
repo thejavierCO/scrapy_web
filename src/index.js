@@ -40,17 +40,4 @@ async function run() {
   await browser.close()
   console.log(data)
 }
-
 run()
-
-/**
- * Array.from(
-      document.querySelector('table#tabla_servicios1').querySelectorAll('tr'),
-    )
-      .filter((e) => e.id == '')
-      .map((e) =>
-        Array.from(e.querySelectorAll('td'))
-          .filter((e) => e.querySelectorAll("input").length ==1)
-          .map((e) => e),
-      )
- */
