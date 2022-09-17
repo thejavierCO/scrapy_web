@@ -6,11 +6,11 @@ class SADM extends Page {
     await webpage.type('form > input[name=email].form-control', user)
     await webpage.type('form > input[name=password].form-control', password)
     await webpage.click('form > input[type=button]')
-    await page.waitForSelector('table#tabla_servicios1')
+    await webpage.waitForSelector('table#tabla_servicios1')
     return webpage
   }
-  async data() {
-    return await page.evaluate(() =>
+  async getTableService(webpage = this.login) {
+    return await webpage.evaluate(() =>
       Array.from(
         document.querySelector('table#tabla_servicios1').querySelectorAll('tr'),
       )
