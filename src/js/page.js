@@ -5,11 +5,11 @@ class Page {
     this.url = url
     this.Navegator = Navegator(view)
   }
-  async start(callback) {
+  async start() {
     const N = await this.Navegator
     const page = await N.newPage()
     await page.goto(this.url)
-    callback(async () => await N.close())
+    return [page, N]
   }
 }
 
