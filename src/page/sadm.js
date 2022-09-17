@@ -1,6 +1,9 @@
 const Page = require('../js/page')
 
 class SADM extends Page {
+  constructor(view) {
+    super('https://ayd.sadm.gob.mx/eAyd/Login.jsp', view)
+  }
   async login(user, password) {
     const webpage = await this.start()
     await webpage.type('form > input[name=email].form-control', user)
