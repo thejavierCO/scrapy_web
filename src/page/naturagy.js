@@ -10,10 +10,13 @@ class Naturagy extends Page {
   async login(user, password) {
     const page = await this.start()
     await page.waitForSelector('form.cLoginForm')
-    await page.type('form.cLoginForm > input#input-11.slds-input', user)
-    await page.type('form.cLoginForm > input#input-13.slds-input', password)
+    await page.evaluate(() => {
+      console.log(document.querySelector('form.cLoginForm'))
+    })
+    await page.type('form.cLoginForm > input[name=username]', user)
+    // await page.type('form.cLoginForm > input#input-13.slds-input', password)
     await page.click(
-      'form.cLoginform > button.slds-button.slds-button_brand.slds-form-element__control.slds-m-top--medium.slds-button_stretch.btn.radiousborder',
+      'button.slds-button.slds-button_brand.slds-form-element__control.slds-m-top--medium.slds-button_stretch.btn.radiousborder',
     )
   }
   async getDataService() {
