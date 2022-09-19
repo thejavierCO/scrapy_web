@@ -6,7 +6,7 @@ const CFE = require('./page/cfe')
 const Naturagy = require('./page/naturagy')
 
 async function Main() {
-  let test = new Naturagy()
+  let test = new Naturagy(true)
   await test.login(process.env.NATURAGY_EMAIL, process.env.NATURAGY_PASS)
   let data = await test.getDataService()
   console.log(data)
