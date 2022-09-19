@@ -9,7 +9,6 @@ async function Main() {
   await test.login(process.env.CFE_EMAIL, process.env.CFE_PASS)
   let data = await test.getTableService()
   test.Exit()
-  console.log(data)
-  // fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
+  fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
 }
 Main()
