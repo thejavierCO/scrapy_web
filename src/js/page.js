@@ -11,6 +11,7 @@ class Page {
     const page = await N.newPage()
     await page.goto(this.url)
     this.page = page
+    return this.page
   }
   async Exit() {
     return await (await this.Navegator).close()
