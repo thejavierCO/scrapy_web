@@ -6,11 +6,18 @@ const CFE = require('./page/cfe')
 const Naturagy = require('./page/naturagy')
 
 async function Main() {
-  let test = new Naturagy(true)
-  await test.login(process.env.NATURAGY_EMAIL, process.env.NATURAGY_PASS)
-  let data = await test.getDataService()
-  console.log(data)
-  // test.Exit()
-  // fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
+  let data = {}
+
+  let wheater = new SADM()
+  await wheater.login(process.env.SADM_EMAIL, process.env.SADM_PASS)
+  data.agua = await wheater.getTableService()
+  wheater.Exit()
+
+  let linght = new CFE()
+  await linght.login(process.env.CFE_EMAIL, process.env.CFE_PASS)
+  data.luz = await linght.getTableService()
+  linght.Exit()
+
+  fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
 }
 Main()
