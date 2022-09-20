@@ -1,23 +1,28 @@
-require('dotenv').config()
+const config = require('./config')
 const fs = require('fs')
 const path = require('path')
 const SADM = require('./page/sadm')
 const CFE = require('./page/cfe')
-const Naturagy = require('./page/naturagy')
 
-async function Main() {
-  let data = {}
+async function Main(force = false) {
+  if (force) {
+    let data = {}
 
-  let wheater = new SADM()
-  await wheater.login(process.env.SADM_EMAIL, process.env.SADM_PASS)
-  data.agua = await wheater.getTableService()
-  wheater.Exit()
+    let wheater = new SADM()
+    await wheater.login(config.SADM.user, config.SADM.pass)
+    data.agua = await wheater.getTableService()
+    wheater.Exit()
 
-  let linght = new CFE()
-  await linght.login(process.env.CFE_EMAIL, process.env.CFE_PASS)
-  data.luz = await linght.getTableService()
-  linght.Exit()
-
-  fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
+    let linght = new CFE()
+    await linght.login(config.CFE.user, config.CFE.pass)
+    data.luz = await linght.getTableService()
+    linght.Exit()
+    fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
+    return data
+  }
+  return fs.existsSync(path.join(__dirname, 'test.json'))
+    ? JSON.parse(fs.readFileSync(path.join(__dirname, 'test.json')).toString())
+    : Main(true)
 }
-Main()
+
+module.exports = Main
