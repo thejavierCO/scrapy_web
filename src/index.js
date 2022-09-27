@@ -17,6 +17,7 @@ async function Main(force = false) {
     await linght.login(config.CFE.user, config.CFE.pass)
     data.luz = await linght.getTableService()
     linght.Exit()
+
     fs.writeFileSync(path.join(__dirname, 'test.json'), JSON.stringify(data))
     return data
   }
@@ -25,4 +26,16 @@ async function Main(force = false) {
     : Main(true)
 }
 
-module.exports = Main
+Main()
+  .then((e) => {
+    console.log('update')
+    return true
+  })
+  .then((e) => {
+    setInterval(async () => {
+      await Main()
+    }, 86400)
+  })
+  .catch((err) => {
+    console.log(err, 'message')
+  })
