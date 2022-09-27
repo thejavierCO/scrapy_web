@@ -1,17 +1,15 @@
 const express = require('express')
-const Main = require('./index')
-const app = express()
+const path = require('path')
 const morgan = require('morgan')
 
+const app = express()
+
 app.use(morgan('dev'))
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
 
-app.get('/update', async (req, res, next) => {
-  await Main(true)
-  res.json({ ok: 'updated' })
-})
+app.use('/api', require('./routers'))
 
-app.get('/data', async (req, res, next) => {
-  res.json(await Main())
-})
+app.use('/', express.static(path.join(__dirname, '../public')))
 
 app.listen(process.env.PORT || 3000, () => console.log('run'))
