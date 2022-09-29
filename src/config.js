@@ -1,9 +1,4 @@
-const { createClient } = require('@supabase/supabase-js')
 require('dotenv').config()
-
-const supabaseUrl = 'https://duqbbvdgwtwqgdjwszxk.supabase.co'
-const supabaseKey = process.env.SUPABASE_KEY
-const supabase = createClient(supabaseUrl, supabaseKey)
 
 module.exports = {
   SADM: {
@@ -14,5 +9,8 @@ module.exports = {
     user: process.env.CFE_EMAIL,
     pass: process.env.CFE_PASS,
   },
-  supabase,
+  supabase: {
+    url: process.env.SUPABASE_URL,
+    key: process.env.SUPABASE_KEY,
+  },
 }

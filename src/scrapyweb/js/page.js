@@ -3,7 +3,7 @@ const Navegator = require('./browser')
 class Page {
   constructor(url, view = false) {
     this.url = url
-    this.Navegator = Navegator(view)
+    this.Navegator = new Navegator(view).launch()
     this.page = undefined
   }
   async start() {

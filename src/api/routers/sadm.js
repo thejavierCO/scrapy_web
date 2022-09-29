@@ -1,5 +1,5 @@
-const config = require('../config')
-const SADM = require('../page/sadm')
+const config = require('../../config')
+const SADM = require('../../scrapyweb/page/sadm')
 const router = require('express').Router()
 
 router.get('/', async (req, res, next) => {
