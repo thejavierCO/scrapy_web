@@ -10,6 +10,6 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/api', require('./routers'))
 
-app.use('/', express.static(path.join(__dirname, '../public')))
+app.use('/', express.static(path.join(__dirname, '../../public')))
 
 app.listen(process.env.PORT || 3000, () => console.log('run'))

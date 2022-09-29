@@ -1,9 +1,9 @@
-const supabase = require('../supabase')
+const supabase = require('../../supabase')
 const router = require('express').Router()
 
 router.get('/', async (req, res, next) => {
   try {
-    let { data, error } = await supabase.form('agua').select('*')
+    let { data, error } = await supabase.from('agua').select('*')
     if (error) throw error
     res.json(data)
   } catch (err) {
