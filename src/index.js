@@ -1,15 +1,18 @@
 const config = require('./config')
-const SADM = require('./scrapyweb/page/sadm')
+const CFE = require('./scrapyweb/page/cfe')
 
 async function Main() {
-  let wheater = new SADM()
-  await wheater.login(config.SADM.user, config.SADM.pass)
+  let wheater = new CFE()
+  await wheater.login(config.CFE.user, config.CFE.pass)
   let data = await wheater.getTableService().then((e) =>
-    e.map(({ id, direction, date, price }) => ({
-      id,
-      street: direction,
-      date,
-      price,
+    e.map(({ street, data }) => ({
+      id: parseInt(data['Número de servicio'].replace(/ /g, '')),
+      street,
+      date: data['Fecha límite de pago'],
+      price:
+        data['Estado del recibo'] == 'PAGADO'
+          ? parseInt(data['Monto a pagar por el período'].slice(1))
+          : 0,
     })),
   )
   wheater.Exit()
