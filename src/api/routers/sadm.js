@@ -1,14 +1,10 @@
-const config = require('../../config')
-const SADM = require('../../scrapyweb/page/sadm')
+const supabase = require('../supabase')
 const router = require('express').Router()
 
 router.get('/', async (req, res, next) => {
   try {
-    let data = {}
-    let wheater = new SADM()
-    await wheater.login(config.SADM.user, config.SADM.pass)
-    data = await wheater.getTableService()
-    wheater.Exit()
+    let { data, error } = await supabase.form('agua').select('*')
+    if (error) throw error
     res.json(data)
   } catch (err) {
     res.json({ err: err.message })
