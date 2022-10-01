@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serv": "node src/api.js",
+    "serv": "node src/api",
     "clock": "node src"
   },
   "keywords": [],
