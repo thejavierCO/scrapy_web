@@ -45,31 +45,30 @@ async function Main() {
     .login(config.SADM.user, config.SADM.pass)
     .then(async (e) => await wheater.getTableService())
     .then((e) =>
-      e.map((e) => {
-        const { id, direction, date, price } = e
-        return {
-          id,
-          street: direction,
-          date,
-          price,
-        }
-      }),
-    )
-    .then((e) =>
-      e.map(async (e) => {
-        try {
-          const { data, error } = await supabse.from('agua').insert(e)
-          if (error)
-            if (error.code == 23505) {
-              const { data, error } = await supabse.from('agua').update(e)
-              if (error) throw error
-              else return data
-            } else throw error
-          else return data
-        } catch (err) {
-          console.log(err)
-        }
-      }),
+      e
+        .map((e) => {
+          const { id, direction, date, price } = e
+          return {
+            id,
+            street: direction,
+            date,
+            price,
+          }
+        })
+        .map(async (e) => {
+          try {
+            const { data, error } = await supabse.from('agua').insert(e)
+            if (error)
+              if (error.code == 23505) {
+                const { data, error } = await supabse.from('agua').update(e)
+                if (error) throw error
+                else return data
+              } else throw error
+            else return data
+          } catch (err) {
+            console.log(err)
+          }
+        }),
     )
     .catch((e) => {
       console.log(e)
