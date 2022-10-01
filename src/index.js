@@ -4,7 +4,8 @@ const CFE = require('./scrapyweb/page/cfe')
 const supabse = require('./supabase')
 
 async function Main() {
-  let cfe = new CFE()
+  let cfe = new CFE(),
+    wheater = new SADM()
   let dataluz = await cfe
     .login(config.CFE.user, config.CFE.pass)
     .then((_) => cfe.getTableService())
@@ -40,7 +41,6 @@ async function Main() {
     })
   cfe.Exit()
 
-  let wheater = new SADM()
   let dataagua = await wheater
     .login(config.SADM.user, config.SADM.pass)
     .then(async (e) => await wheater.getTableService())
