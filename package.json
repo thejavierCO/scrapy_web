@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "serv": "node src/api",
-    "clock": "node src"
+    "serv": "nodemon src/api",
+    "clock": "nodemon src"
   },
   "keywords": [],
   "author": "",

@@ -8,11 +8,8 @@ class Browser {
     return async (...a) =>
       await puppeteer.launch(
         this.debug == false
-          ? {
-              args: ['--no-sandbox', '--disable-setuid-sandbox'],
-              ...a,
-            }
-          : { devtools: true, headless: false, ...a },
+          ? { args: ['--no-sandbox', '--disable-setuid-sandbox'], ...a }
+          : { args: ['--no-sandbox', '--disable-setuid-sandbox'], devtools: true, headless: false, ...a },
       )
   }
 }
