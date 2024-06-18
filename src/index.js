@@ -1,7 +1,6 @@
 const config = require('./config')
 const SADM = require('./scrapyweb/page/sadm')
 const CFE = require('./scrapyweb/page/cfe')
-const supabse = require('./supabase')
 
 async function Main() {
   let cfe = new CFE(),
@@ -20,20 +19,6 @@ async function Main() {
               ? parseInt(data['Monto a pagar por el período'].slice(1))
               : 0,
         }))
-        .map(async (e) => {
-          try {
-            const { data, error } = await supabse.from('luz').insert(e)
-            if (error)
-              if (error.code == 23505) {
-                const { data, error } = await supabse.from('luz').update(e)
-                if (error) throw error
-                else return data
-              } else throw error
-            else return data
-          } catch (err) {
-            console.log(err)
-          }
-        }),
     )
     .catch((e) => {
       console.log(e)
@@ -54,20 +39,6 @@ async function Main() {
             date,
             price,
           }
-        })
-        .map(async (e) => {
-          try {
-            const { data, error } = await supabse.from('agua').insert(e)
-            if (error)
-              if (error.code == 23505) {
-                const { data, error } = await supabse.from('agua').update(e)
-                if (error) throw error
-                else return data
-              } else throw error
-            else return data
-          } catch (err) {
-            console.log(err)
-          }
         }),
     )
     .catch((e) => {
@@ -81,17 +52,18 @@ async function Main() {
 function loop() {
   return Main().then((a) => console.log('update', a))
 }
-loop()
-  .then(() => {
-    let clear = setInterval(
-      () =>
-        loop().catch((e) => {
-          console.log(e)
-          clearInterval(clear)
-        }),
-      Math.round(86400),
-    )
-  })
-  .catch((e) => {
-    console.log(e)
-  })
+loop();
+// loop()
+//   .then(() => {
+//     let clear = setInterval(
+//       () =>
+//         loop().catch((e) => {
+//           console.log(e)
+//           clearInterval(clear)
+//         }),
+//       Math.round(86400),
+//     )
+//   })
+//   .catch((e) => {
+//     console.log(e)
+//   })
